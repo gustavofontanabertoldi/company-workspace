@@ -21,7 +21,7 @@ int main (){
     fgets(alguem.endereco, sizeof(alguem.endereco), stdin);
     //scanf("%s", &alguem.endereco);
 
-    printf("%s", alguem.nome);
+    printf("\n%s", alguem.nome);
     printf("%d\n", alguem.idade);
     printf("%s\n", alguem.endereco);
 
