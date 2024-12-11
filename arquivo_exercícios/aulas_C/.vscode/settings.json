@@ -1,8 +1,5 @@
 {
     "files.associations": {
-        "ex1.C": "cpp",
-        "recursividade.C": "cpp",
-        "ex2.C": "cpp",
-        "ex3.C": "cpp"
+        "libraries.C": "cpp"
     }
 }
