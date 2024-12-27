@@ -55,26 +55,81 @@ void del (TREE **t, int num){
     }
 }
 
-void exclude (TREE **t, int num){
-    TREE *atual, *prox = NULL;
-    atual = (*t);
-    while(atual != NULL && atual->value != num){//loop to find the number
-        prox = atual;    
-        if(num > atual->value){    //verify if the num is higher than the current
-            if(atual->rt != NULL){
-                atual = atual->rt;
-            }
-        }else if(num < atual->value){  //verify if the num is lower than the current
-            if(atual->lt != NULL){
-                atual = atual->lt;
-            }
+void exclude(TREE **t, int num) {
+    TREE *atual = *t, *prox = NULL;
+
+    // Localizar o nó a ser excluído
+    while (atual != NULL && atual->value != num) {
+        prox = atual;
+        if (num > atual->value) {
+            atual = atual->rt;
+        } else {
+            atual = atual->lt;
         }
     }
-    
+
+    // Se o nó não foi encontrado
+    if (atual == NULL) {
+        printf("Número não encontrado na árvore.\n");
+        return;
+    }
+
+    // Caso 1: Nó folha
+    if (atual->lt == NULL && atual->rt == NULL) {
+        if (prox == NULL) { // Nó raiz
+            *t = NULL;
+        } else if (prox->lt == atual) {
+            prox->lt = NULL;
+        } else {
+            prox->rt = NULL;
+        }
+    }
+    // Caso 2: Um único filho
+    else if (atual->lt == NULL || atual->rt == NULL) {
+        TREE *filho = (atual->lt != NULL) ? atual->lt : atual->rt;
+        if (prox == NULL) { // Nó raiz
+            *t = filho;
+        } else if (prox->lt == atual) {
+            prox->lt = filho;
+        } else {
+            prox->rt = filho;
+        }
+    }
+    // Caso 3: Dois filhos
+    else {
+        TREE *substituto = atual->rt, *paiSubstituto = atual;
+        while (substituto->lt != NULL) {
+            paiSubstituto = substituto;
+            substituto = substituto->lt;
+        }
+
+        atual->value = substituto->value; // Substituir valor
+        if (paiSubstituto->lt == substituto) {
+            paiSubstituto->lt = substituto->rt;
+        } else {
+            paiSubstituto->rt = substituto->rt;
+        }
+        atual = substituto; // Para liberar o nó substituído
+    }
+
+    free(atual);
 }
 
+
 int main (){
+    TREE *t = create();
 
+    add(&t, 12);
+    add(&t, 15);
+    add(&t, 1);
+    add(&t, 7);
+    add(&t, 20);
 
+    show(t);
+    if(empty(t)){
+        printf("The tree is empty");
+    }
+
+    free(t);
     return 0;
 }
