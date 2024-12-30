@@ -4,13 +4,14 @@
 void insert_sort(int vetor, int tam){
     int troca;
 
-    for(int i = 1; i < tam; i++){
+    for (int i = 1; i < tam; i++) {
         int prox = i;
 
-        while(prox != 0 && vetor[prox] < vetor[prox - 1]){
-            troca = vetor[prox];
-            vetor [prox] = vetor[prox - 1];
-            vetor[prox - 1] = troca
+        while (prox != 0 && vetor[prox] < vetor[prox - 1]) {
+            int troca = vetor[prox];
+            vetor[prox] = vetor[prox - 1];
+            vetor[prox - 1] = troca;
+            prox--;
         }
     }
 }
