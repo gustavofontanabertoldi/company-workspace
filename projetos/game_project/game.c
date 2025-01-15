@@ -24,7 +24,85 @@ int main(){
 }
 
 void play(){
-    //TBD
+    CALC calcular;
+    int dificuldade;
+
+    printf("Informe o nível de dificuldade desejado [1, 2, 3 ou 4]: ");
+    sacnf("%i", &dificuldade);
+
+    calcular.dificuldade = dificuldade;
+
+    //gera uma valor inteiro randomico entre 0 e 2
+    // 0 == somar; 1 == diminuir; 2 == multiplicar;
+    calcular.operacao = rand() % 3;
+
+    if (calcular.dificuldade == 1){
+        //facil
+        calcular.valor1 = rand() % 11;
+        calcular.valor2 = rand() % 11;
+    }else if(calcular.dificuldade == 2){
+        //medio
+        calcular.valor1 = rand() % 101;
+        calcular.valor2 = rand() % 101;
+    }else if(calcular.dificuldade == 3){
+        //dificil
+        calcular.valor1 = rand() % 1001;
+        calcular.valor2 = rand() % 1001;
+    }else if(calcular.dificuldade == 4){
+        //insano
+        calcular.valor1 = rand() % 10001;
+        calcular.valor2 = rand() % 10001;
+    }else{
+        //ultra
+        calcular.valor1 = rand() % 100001;
+        calcular.valor2 = rand() % 100001;
+    }
+
+    int resposta;
+
+    printf("Informe o resultado para a seguinte operação: ");
+
+    //somar
+    if(calcular.operacao == 0){
+        printf("%d + %d\n", calcular.valor1, calcular.valor2);
+        sacnf("%d", &resposta);
+
+        if(somar(resposta, calcular)){
+            pontos =+ 1;
+            printf("Você tem %d pontos", pontos);
+        }
+    }else if(calcular.operacao == 1){
+        printf("%d - %d\n", calcular.valor1, calcular.valor2);
+        sacnf("%d", &resposta);
+
+        if(diminuir(resposta, calcular)){
+            pontos =+ 1;
+            printf("Você tem %d pontos", pontos);
+        }
+    }else if(calcular.operacao == 2){
+        printf("%d x %d\n", calcular.valor1, calcular.valor2);
+        sacnf("%d", &resposta);
+
+        if(multiplicar(resposta, calcular)){
+            pontos =+ 1;
+            printf("Você tem %d pontos", pontos);
+        }
+    }else{
+        printf("A operação não é reconhecida.");
+    }
+
+    //recomeçar o jogo?
+    Printf("Deseja continuar jogando? [1 = Sim, 2 = Não]\n");
+    int continuar;
+    scanf("%d", &continuar);
+
+    if(continuar){
+        play();
+    }else{
+        printf("Você finalizou com %d pontos.\n", pontos);
+        Printf("Até a próxima!");
+    }
+
 }
 
 void show_info(CALC calc){
