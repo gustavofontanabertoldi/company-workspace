@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
+#include <time.h>
 
 typedef struct calcula{
     int dificuldade;
@@ -12,12 +13,15 @@ typedef struct calcula{
 
 void play();
 void show_info(CALC calc);
+int somar(int resposta, CALC calc);
+int diminuir(int resposta, CALC calc);
+int multiplicar(int resposta, CALC calc);
 
 int pontos = 0;
 
 int main(){
 
-    //may be declared only one time
+    //must be declared only one time
     srand(time(NULL));
     play();
     return 0;
@@ -28,7 +32,7 @@ void play(){
     int dificuldade;
 
     printf("Informe o nível de dificuldade desejado [1, 2, 3 ou 4]: ");
-    sacnf("%i", &dificuldade);
+    scanf("%i", &dificuldade);
 
     calcular.dificuldade = dificuldade;
 
@@ -65,7 +69,7 @@ void play(){
     //somar
     if(calcular.operacao == 0){
         printf("%d + %d\n", calcular.valor1, calcular.valor2);
-        sacnf("%d", &resposta);
+        scanf("%d", &resposta);
 
         if(somar(resposta, calcular)){
             pontos =+ 1;
@@ -73,7 +77,7 @@ void play(){
         }
     }else if(calcular.operacao == 1){
         printf("%d - %d\n", calcular.valor1, calcular.valor2);
-        sacnf("%d", &resposta);
+        scanf("%d", &resposta);
 
         if(diminuir(resposta, calcular)){
             pontos =+ 1;
@@ -81,7 +85,7 @@ void play(){
         }
     }else if(calcular.operacao == 2){
         printf("%d x %d\n", calcular.valor1, calcular.valor2);
-        sacnf("%d", &resposta);
+        scanf("%d", &resposta);
 
         if(multiplicar(resposta, calcular)){
             pontos =+ 1;
@@ -92,15 +96,17 @@ void play(){
     }
 
     //recomeçar o jogo?
-    Printf("Deseja continuar jogando? [1 = Sim, 2 = Não]\n");
+    printf("\nDeseja continuar jogando? [1 = Sim, 2 = Não]\n");
     int continuar;
     scanf("%d", &continuar);
 
-    if(continuar){
+    if(continuar == 1){
         play();
-    }else{
+    }else if(continuar ==2){
         printf("Você finalizou com %d pontos.\n", pontos);
-        Printf("Até a próxima!");
+        printf("Até a próxima!");
+    }else{
+        printf("Número inválido!");
     }
 
 }
@@ -118,7 +124,7 @@ void show_info(CALC calc){
         sprintf(op, "Operação desconhecida!");
     }
 
-    printf("Valor 1: %d \nValor 2: %d \nDificuldade: %d \nOperação: %s \n", calc.valor1, calc.valor2, calc.dificuldade, calc.operacao);
+    printf("Valor 1: %d \nValor 2: %d \nDificuldade: %d \nOperação: %s \n", calc.valor1, calc.valor2, calc.dificuldade, op);
 }
 
 int somar(int resposta, CALC calc){
